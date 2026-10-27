@@ -4,6 +4,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <script>
+    (function () {
+      try {
+        var raw = sessionStorage.getItem('unifee_active_session') || localStorage.getItem('unifee_active_session');
+        if (raw) {
+          var sess = JSON.parse(raw);
+          if (sess && sess.userId && (Date.now() - (sess.loginTimestamp || 0)) < 8 * 3600 * 1000) {
+            document.documentElement.classList.add('has-session');
+          }
+        }
+      } catch (e) { }
+    })();
+  </script>
   <title>UniFee Pro | Universal Fee & Billing Management System</title>
   <meta name="description"
     content="Enterprise-grade Universal Fee, Tuition, Subscription, and Billing Management System for Schools, Colleges, Academies, Gyms, Co-working Spaces, and Businesses.">
@@ -104,9 +117,20 @@
       border-radius: 0.5rem;
     }
 
+    html.has-session #auth-screen {
+      display: none !important;
+    }
+
+    html.has-session #app-shell {
+      display: flex !important;
+    }
+
     .btn-interactive {
-      min-height: 44px;
-      min-width: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      vertical-align: middle;
       transition: all 0.12s ease-in-out;
     }
 
@@ -393,7 +417,7 @@
               class="w-full min-h-[44px] px-3.5 py-2 pr-11 rounded-md border border-slate-300 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
               placeholder="Min 8 chars & 1 special char">
             <button type="button" onclick="window.AppController.togglePasswordVisibility('login-password')"
-              class="btn-interactive absolute right-0 top-0 h-full px-3 text-slate-400 hover:text-slate-700 focus:outline-none"
+              class="btn-interactive absolute right-0 top-0 h-full px-3 text-slate-400 hover:text-slate-700 focus:outline-none flex items-center justify-center"
               aria-label="Toggle Password">
               <i class="fa-solid fa-eye"></i>
             </button>
@@ -553,20 +577,20 @@
           </div>
 
           <button type="button" onclick="window.AppController.openQuickCollectModal()"
-            class="btn-interactive px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-md shadow flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+            class="btn-interactive h-9 px-3 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-md shadow inline-flex items-center justify-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-emerald-400">
             <i class="fa-solid fa-cash-register"></i>
             <span class="hidden sm:inline">Quick Fee Collect</span>
           </button>
 
           <button type="button" onclick="window.AppController.openPasswordModal()"
-            class="btn-interactive px-2.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-md border border-slate-600 text-xs flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            class="btn-interactive h-9 px-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-md border border-slate-600 text-xs inline-flex items-center justify-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-blue-400"
             title="Change Password">
             <i class="fa-solid fa-key"></i>
             <span class="hidden md:inline">Password</span>
           </button>
 
           <button type="button" onclick="window.AppController.openSampleDataModal()"
-            class="btn-interactive px-2.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-md border border-slate-600 text-xs flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            class="btn-interactive h-9 px-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-md border border-slate-600 text-xs inline-flex items-center justify-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-blue-400"
             title="Clear or Load Sample Data">
             <i class="fa-solid fa-database text-blue-400"></i>
             <span class="hidden md:inline">Sample Data</span>
@@ -578,7 +602,7 @@
               <div id="active-user-role" class="text-[10px] text-emerald-400 font-semibold uppercase">Admin</div>
             </div>
             <button type="button" onclick="window.AppController.logoutUser()"
-              class="btn-interactive px-2.5 py-2 bg-red-600/90 hover:bg-red-600 text-white rounded-md text-xs font-semibold flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-red-400"
+              class="btn-interactive w-9 h-9 bg-red-600/90 hover:bg-red-600 text-white rounded-md text-xs font-semibold inline-flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-red-400 shrink-0"
               title="Sign Out">
               <i class="fa-solid fa-power-off"></i>
             </button>
@@ -623,8 +647,8 @@
           </button>
           <button type="button" data-route="/settings" onclick="window.AppController.navigate('/settings')"
             class="nav-item btn-interactive flex flex-col md:flex-row items-center gap-1 md:gap-3 px-2.5 md:px-3.5 py-2 md:py-2.5 rounded-md text-[11px] md:text-xs font-semibold transition-colors w-full text-left focus:outline-none focus:ring-2 focus:ring-blue-400">
-            <i class="fa-solid fa-Sliders text-sm md:w-5 text-center"></i>
-            <span>Theme & Backup</span>
+            <i class="fa-solid fa-sliders text-sm md:w-5 text-center"></i>
+            <span>Settings &amp; Backups</span>
           </button>
         </div>
 
@@ -1420,7 +1444,7 @@
         <h3 id="modal-member-title" class="text-base font-bold text-slate-900"><i
             class="fa-solid fa-user-pen text-blue-600 mr-1.5"></i> Member / Student / Client Profile</h3>
         <button type="button" onclick="window.AppController.attemptCloseModal('modal-member')"
-          class="btn-interactive text-slate-400 hover:text-slate-700 rounded-md">
+          class="btn-interactive w-8 h-8 inline-flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-md transition-colors">
           <i class="fa-solid fa-xmark text-lg"></i>
         </button>
       </div>
@@ -1546,7 +1570,7 @@
         <h3 class="text-base font-bold text-slate-900"><i class="fa-solid fa-layer-group text-blue-600 mr-1.5"></i>
           Configure Fee Structure / Plan</h3>
         <button type="button" onclick="window.AppController.attemptCloseModal('modal-plan')"
-          class="btn-interactive text-slate-400 hover:text-slate-700 rounded-md">
+          class="btn-interactive w-8 h-8 inline-flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-md transition-colors">
           <i class="fa-solid fa-xmark text-lg"></i>
         </button>
       </div>
@@ -1636,7 +1660,7 @@
         <h3 class="text-base font-bold text-slate-900"><i
             class="fa-solid fa-file-invoice-dollar text-blue-600 mr-1.5"></i> Issue / Edit Fee Invoice</h3>
         <button type="button" onclick="window.AppController.attemptCloseModal('modal-invoice')"
-          class="btn-interactive text-slate-400 hover:text-slate-700 rounded-md">
+          class="btn-interactive w-8 h-8 inline-flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-md transition-colors">
           <i class="fa-solid fa-xmark text-lg"></i>
         </button>
       </div>
@@ -1741,7 +1765,7 @@
         <h3 class="text-base font-bold text-slate-900"><i class="fa-solid fa-cash-register text-emerald-600 mr-1.5"></i>
           Instant Fee Collection Counter</h3>
         <button type="button" onclick="window.AppController.attemptCloseModal('modal-collect')"
-          class="btn-interactive text-slate-400 hover:text-slate-700 rounded-md">
+          class="btn-interactive w-8 h-8 inline-flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-md transition-colors">
           <i class="fa-solid fa-xmark text-lg"></i>
         </button>
       </div>
@@ -1815,7 +1839,7 @@
         <h3 class="text-base font-bold text-slate-900"><i
             class="fa-solid fa-wand-magic-sparkles text-emerald-600 mr-1.5"></i> Bulk Batch Invoice Generator</h3>
         <button type="button" onclick="window.AppController.attemptCloseModal('modal-bulk')"
-          class="btn-interactive text-slate-400 hover:text-slate-700 rounded-md">
+          class="btn-interactive w-8 h-8 inline-flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-md transition-colors">
           <i class="fa-solid fa-xmark text-lg"></i>
         </button>
       </div>
@@ -1857,7 +1881,7 @@
         <h3 class="text-base font-bold text-slate-900"><i class="fa-solid fa-user-shield text-blue-600 mr-1.5"></i> Add
           / Update System User</h3>
         <button type="button" onclick="window.AppController.attemptCloseModal('modal-user')"
-          class="btn-interactive text-slate-400 hover:text-slate-700 rounded-md">
+          class="btn-interactive w-8 h-8 inline-flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-md transition-colors">
           <i class="fa-solid fa-xmark text-lg"></i>
         </button>
       </div>
@@ -1910,7 +1934,7 @@
         <h3 class="text-base font-bold text-slate-900"><i class="fa-solid fa-key text-blue-600 mr-1.5"></i> Change
           Account Password</h3>
         <button type="button" onclick="window.AppController.attemptCloseModal('modal-password')"
-          class="btn-interactive text-slate-400 hover:text-slate-700 rounded-md">
+          class="btn-interactive w-8 h-8 inline-flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-md transition-colors">
           <i class="fa-solid fa-xmark text-lg"></i>
         </button>
       </div>
@@ -2441,6 +2465,199 @@
         }
       },
 
+      async initOrgProfile() {
+        let profile = await DB.getByKey('settings', 'orgProfile');
+        if (!profile) {
+          profile = { ...DEFAULT_ORG_PROFILE };
+          await DB.put('settings', profile);
+        }
+        AppState.orgProfile = profile;
+        this.applyOrgProfile(profile);
+      },
+
+      applyOrgProfile(profile) {
+        if (!profile) return;
+        APP_CONFIG.currencySymbol = profile.currencySymbol || '$';
+        AppState.uploadedOrgLogoDataUrl = profile.logoDataUrl || '';
+
+        const orgHeaderTitle = document.getElementById('org-header-title');
+        if (orgHeaderTitle) orgHeaderTitle.textContent = profile.name || 'UniFee Pro Enterprise';
+
+        const orgHeaderDesc = document.getElementById('org-header-desc');
+        if (orgHeaderDesc) orgHeaderDesc.textContent = profile.description || 'Universal Fee & Billing Engine';
+
+        const loginTitle = document.getElementById('login-org-title');
+        if (loginTitle) loginTitle.textContent = profile.name || 'UniFee Pro';
+
+        const loginDesc = document.getElementById('login-org-desc');
+        if (loginDesc) loginDesc.textContent = profile.description || 'Universal Fee & Billing Engine';
+
+        const headerLogoImg = document.getElementById('org-header-logo-img');
+        const headerLogoIcon = document.getElementById('org-header-logo-icon');
+        const loginLogoImg = document.getElementById('login-org-logo-img');
+        const loginLogoIcon = document.getElementById('login-org-logo-icon');
+
+        if (profile.logoDataUrl) {
+          if (headerLogoImg) {
+            headerLogoImg.src = profile.logoDataUrl;
+            headerLogoImg.classList.remove('hidden');
+          }
+          if (headerLogoIcon) headerLogoIcon.classList.add('hidden');
+
+          if (loginLogoImg) {
+            loginLogoImg.src = profile.logoDataUrl;
+            loginLogoImg.classList.remove('hidden');
+          }
+          if (loginLogoIcon) loginLogoIcon.classList.add('hidden');
+        } else {
+          if (headerLogoImg) headerLogoImg.classList.add('hidden');
+          if (headerLogoIcon) headerLogoIcon.classList.remove('hidden');
+
+          if (loginLogoImg) loginLogoImg.classList.add('hidden');
+          if (loginLogoIcon) loginLogoIcon.classList.remove('hidden');
+        }
+
+        const nameInput = document.getElementById('org-setting-name');
+        if (nameInput) nameInput.value = profile.name || '';
+
+        const typeInput = document.getElementById('org-setting-type');
+        if (typeInput) typeInput.value = profile.type || 'School / College';
+
+        const descInput = document.getElementById('org-setting-desc');
+        if (descInput) descInput.value = profile.description || '';
+
+        const phoneInput = document.getElementById('org-setting-phone');
+        if (phoneInput) phoneInput.value = profile.phone || '';
+
+        const emailInput = document.getElementById('org-setting-email');
+        if (emailInput) emailInput.value = profile.email || '';
+
+        const addressInput = document.getElementById('org-setting-address');
+        if (addressInput) addressInput.value = profile.address || '';
+
+        const currInput = document.getElementById('org-setting-currency');
+        if (currInput) currInput.value = profile.currencySymbol || '$';
+
+        const noteInput = document.getElementById('org-setting-receipt-note');
+        if (noteInput) noteInput.value = profile.receiptNote || '';
+
+        const stampInput = document.getElementById('org-setting-stamp-title');
+        if (stampInput) stampInput.value = profile.receiptStampText || '';
+
+        const logoPreview = document.getElementById('org-logo-preview');
+        const logoPlaceholder = document.getElementById('org-logo-placeholder');
+        const logoRemoveBtn = document.getElementById('org-logo-remove-btn');
+
+        if (profile.logoDataUrl) {
+          if (logoPreview) {
+            logoPreview.src = profile.logoDataUrl;
+            logoPreview.classList.remove('hidden');
+          }
+          if (logoPlaceholder) logoPlaceholder.classList.add('hidden');
+          if (logoRemoveBtn) logoRemoveBtn.classList.remove('hidden');
+        } else {
+          if (logoPreview) logoPreview.classList.add('hidden');
+          if (logoPlaceholder) logoPlaceholder.classList.remove('hidden');
+          if (logoRemoveBtn) logoRemoveBtn.classList.add('hidden');
+        }
+
+        document.querySelectorAll('.app-currency-symbol').forEach(el => {
+          el.textContent = APP_CONFIG.currencySymbol;
+        });
+      },
+
+      async handleOrgLogoUpload(fileInput) {
+        const file = fileInput.files && fileInput.files[0];
+        if (!file) return;
+
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
+        if (!allowedTypes.includes(file.type.toLowerCase())) {
+          fileInput.value = '';
+          Swal.fire({ icon: 'error', title: 'Invalid Image Format', text: 'Only JPG, PNG, WEBP, or GIF images are allowed for the logo.' });
+          return;
+        }
+
+        const rawTextSample = await file.slice(0, 2048).text();
+        if (/<script|<\?php|onerror=|onload=/i.test(rawTextSample)) {
+          fileInput.value = '';
+          Swal.fire({ icon: 'error', title: 'Security Alert', text: 'File contains forbidden executable code signatures.' });
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let width = img.width;
+            let height = img.height;
+            const maxDim = 320;
+            if (width > maxDim || height > maxDim) {
+              if (width > height) {
+                height = Math.round((height * maxDim) / width);
+                width = maxDim;
+              } else {
+                width = Math.round((width * maxDim) / height);
+                height = maxDim;
+              }
+            }
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+
+            let quality = 0.85;
+            let dataUrl = canvas.toDataURL('image/png');
+            if (dataUrl.length * 0.75 > APP_CONFIG.maxImageBytes) {
+              dataUrl = canvas.toDataURL('image/jpeg', quality);
+              while (dataUrl.length * 0.75 > APP_CONFIG.maxImageBytes && quality > 0.2) {
+                quality -= 0.12;
+                dataUrl = canvas.toDataURL('image/jpeg', quality);
+              }
+            }
+
+            AppState.uploadedOrgLogoDataUrl = dataUrl;
+            const preview = document.getElementById('org-logo-preview');
+            const placeholder = document.getElementById('org-logo-placeholder');
+            const removeBtn = document.getElementById('org-logo-remove-btn');
+            if (preview) {
+              preview.src = dataUrl;
+              preview.classList.remove('hidden');
+            }
+            if (placeholder) placeholder.classList.add('hidden');
+            if (removeBtn) removeBtn.classList.remove('hidden');
+            AppState.isFormDirty = true;
+          };
+          img.onerror = () => {
+            fileInput.value = '';
+            Swal.fire({ icon: 'error', title: 'Corrupted Image', text: 'Could not decode valid image pixels.' });
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      },
+
+      removeOrgLogo() {
+        AppState.uploadedOrgLogoDataUrl = '';
+        const fileInput = document.getElementById('org-logo-input');
+        if (fileInput) fileInput.value = '';
+        const preview = document.getElementById('org-logo-preview');
+        const placeholder = document.getElementById('org-logo-placeholder');
+        const removeBtn = document.getElementById('org-logo-remove-btn');
+        if (preview) preview.classList.add('hidden');
+        if (placeholder) placeholder.classList.remove('hidden');
+        if (removeBtn) removeBtn.classList.add('hidden');
+        AppState.isFormDirty = true;
+      },
+
+      quickSetCurrency(sym) {
+        const el = document.getElementById('org-setting-currency');
+        if (el) {
+          el.value = sym;
+          AppState.isFormDirty = true;
+        }
+      },
+
       generateCaptcha(context) {
         const canvas = document.createElement('canvas');
         canvas.width = 160;
@@ -2570,31 +2787,51 @@
       },
 
       async checkExistingSession() {
-        const raw = sessionStorage.getItem('unifee_active_session');
-        if (!raw) return;
+        const raw = sessionStorage.getItem('unifee_active_session') || localStorage.getItem('unifee_active_session');
+        if (!raw) {
+          document.documentElement.classList.remove('has-session');
+          return;
+        }
         try {
           const sess = JSON.parse(raw);
           const absoluteElapsedHours = (Date.now() - sess.loginTimestamp) / (1000 * 60 * 60);
           if (absoluteElapsedHours >= APP_CONFIG.absoluteSessionHours) {
             sessionStorage.removeItem('unifee_active_session');
+            localStorage.removeItem('unifee_active_session');
+            document.documentElement.classList.remove('has-session');
+            document.getElementById('auth-screen').classList.remove('hidden');
+            document.getElementById('app-shell').classList.add('hidden');
             Swal.fire({ icon: 'warning', title: 'Absolute Session Limit (8h) Reached', text: 'Please sign in again for security verification.' });
             return;
           }
           const user = await DB.getByKey('users', sess.userId);
           if (user) {
             await this.launchAuthenticatedSession(user, sess.loginTimestamp);
+          } else {
+            sessionStorage.removeItem('unifee_active_session');
+            localStorage.removeItem('unifee_active_session');
+            document.documentElement.classList.remove('has-session');
+            document.getElementById('auth-screen').classList.remove('hidden');
+            document.getElementById('app-shell').classList.add('hidden');
           }
         } catch (e) {
           sessionStorage.removeItem('unifee_active_session');
+          localStorage.removeItem('unifee_active_session');
+          document.documentElement.classList.remove('has-session');
+          document.getElementById('auth-screen').classList.remove('hidden');
+          document.getElementById('app-shell').classList.add('hidden');
         }
       },
 
       async launchAuthenticatedSession(user, loginTimestamp = Date.now()) {
         AppState.currentUser = user;
-        sessionStorage.setItem('unifee_active_session', JSON.stringify({
+        const sessPayload = JSON.stringify({
           userId: user.id,
           loginTimestamp
-        }));
+        });
+        sessionStorage.setItem('unifee_active_session', sessPayload);
+        localStorage.setItem('unifee_active_session', sessPayload);
+        document.documentElement.classList.add('has-session');
 
         document.getElementById('auth-screen').classList.add('hidden');
         document.getElementById('app-shell').classList.remove('hidden');
@@ -2649,6 +2886,8 @@
 
       logoutUser(reason = '') {
         sessionStorage.removeItem('unifee_active_session');
+        localStorage.removeItem('unifee_active_session');
+        document.documentElement.classList.remove('has-session');
         AppState.currentUser = null;
         if (AppState.idleTimerInterval) clearInterval(AppState.idleTimerInterval);
         document.getElementById('app-shell').classList.add('hidden');
@@ -2682,7 +2921,7 @@
           '/invoices': 'Fee Invoices & Receipts Ledger | UniFee Pro',
           '/defaulters': 'Overdue Dues & Follow-ups | UniFee Pro',
           '/users': 'RBAC User Management | UniFee Pro',
-          '/settings': 'Theme & Encrypted Backup Settings | UniFee Pro'
+          '/settings': 'Settings & Backups | UniFee Pro'
         };
         document.title = routeMetaTitles[routePath] || APP_CONFIG.appName;
 
@@ -2923,8 +3162,8 @@
           <td><span class="px-2 py-0.5 text-xs rounded-full font-semibold ${m.status === 'Active' ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-600'}">${escapeHtml(m.status)}</span></td>
           <td>
             <div class="flex items-center gap-1">
-              <button type="button" onclick="window.AppController.openMemberModal('${escapeHtml(m.id)}')" class="btn-interactive px-2.5 py-1 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded text-xs font-semibold" title="Edit Member"><i class="fa-solid fa-pen"></i></button>
-              ${isAdmin ? `<button type="button" onclick="window.AppController.deleteRecord('members', '${escapeHtml(m.id)}', '${escapeHtml(m.name)}')" class="btn-interactive px-2.5 py-1 bg-red-50 hover:bg-red-100 text-red-600 rounded text-xs font-semibold" title="Delete Member"><i class="fa-solid fa-trash"></i></button>` : ''}
+              <button type="button" onclick="window.AppController.openMemberModal('${escapeHtml(m.id)}')" class="btn-interactive w-7 h-7 inline-flex items-center justify-center p-0 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded text-xs font-semibold" title="Edit Member"><i class="fa-solid fa-pen"></i></button>
+              ${isAdmin ? `<button type="button" onclick="window.AppController.deleteRecord('members', '${escapeHtml(m.id)}', '${escapeHtml(m.name)}')" class="btn-interactive w-7 h-7 inline-flex items-center justify-center p-0 bg-red-50 hover:bg-red-100 text-red-600 rounded text-xs font-semibold" title="Delete Member"><i class="fa-solid fa-trash"></i></button>` : ''}
             </div>
           </td>
         </tr>
@@ -2955,8 +3194,8 @@
           <td class="font-extrabold text-emerald-700">${formatMoney(totalWithTax)}</td>
           <td>
             <div class="flex items-center gap-1">
-              <button type="button" onclick="window.AppController.openPlanModal('${escapeHtml(p.id)}')" class="btn-interactive px-2.5 py-1 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded text-xs font-semibold"><i class="fa-solid fa-pen"></i></button>
-              ${isAdmin ? `<button type="button" onclick="window.AppController.deleteRecord('plans', '${escapeHtml(p.id)}', '${escapeHtml(p.title)}')" class="btn-interactive px-2.5 py-1 bg-red-50 hover:bg-red-100 text-red-600 rounded text-xs font-semibold"><i class="fa-solid fa-trash"></i></button>` : ''}
+              <button type="button" onclick="window.AppController.openPlanModal('${escapeHtml(p.id)}')" class="btn-interactive w-7 h-7 inline-flex items-center justify-center p-0 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded text-xs font-semibold" title="Edit Plan"><i class="fa-solid fa-pen"></i></button>
+              ${isAdmin ? `<button type="button" onclick="window.AppController.deleteRecord('plans', '${escapeHtml(p.id)}', '${escapeHtml(p.title)}')" class="btn-interactive w-7 h-7 inline-flex items-center justify-center p-0 bg-red-50 hover:bg-red-100 text-red-600 rounded text-xs font-semibold" title="Delete Plan"><i class="fa-solid fa-trash"></i></button>` : ''}
             </div>
           </td>
         </tr>
@@ -2991,10 +3230,10 @@
           <td>${this.statusBadgeHtml(inv.status)}</td>
           <td>
             <div class="flex items-center gap-1">
-              ${inv.balance > 0 ? `<button type="button" onclick="window.AppController.openQuickCollectModal('${escapeHtml(inv.id)}')" class="btn-interactive px-2 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-xs" title="Collect Fee"><i class="fa-solid fa-cash-register"></i></button>` : ''}
-              <button type="button" onclick="window.AppController.openReceiptPreview('${escapeHtml(inv.id)}')" class="btn-interactive px-2 py-1 bg-slate-800 hover:bg-slate-900 text-white rounded text-xs" title="Print Voucher"><i class="fa-solid fa-print"></i></button>
-              <button type="button" onclick="window.AppController.openInvoiceModal('${escapeHtml(inv.id)}')" class="btn-interactive px-2 py-1 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded text-xs" title="Edit Invoice"><i class="fa-solid fa-pen"></i></button>
-              ${isAdmin ? `<button type="button" onclick="window.AppController.deleteRecord('invoices', '${escapeHtml(inv.id)}', '${escapeHtml(inv.invoiceNo)}')" class="btn-interactive px-2 py-1 bg-red-50 hover:bg-red-100 text-red-600 rounded text-xs" title="Delete Invoice"><i class="fa-solid fa-trash"></i></button>` : ''}
+              ${inv.balance > 0 ? `<button type="button" onclick="window.AppController.openQuickCollectModal('${escapeHtml(inv.id)}')" class="btn-interactive w-7 h-7 inline-flex items-center justify-center p-0 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-xs" title="Collect Fee"><i class="fa-solid fa-cash-register"></i></button>` : ''}
+              <button type="button" onclick="window.AppController.openReceiptPreview('${escapeHtml(inv.id)}')" class="btn-interactive w-7 h-7 inline-flex items-center justify-center p-0 bg-slate-800 hover:bg-slate-900 text-white rounded text-xs" title="Print Voucher"><i class="fa-solid fa-print"></i></button>
+              <button type="button" onclick="window.AppController.openInvoiceModal('${escapeHtml(inv.id)}')" class="btn-interactive w-7 h-7 inline-flex items-center justify-center p-0 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded text-xs" title="Edit Invoice"><i class="fa-solid fa-pen"></i></button>
+              ${isAdmin ? `<button type="button" onclick="window.AppController.deleteRecord('invoices', '${escapeHtml(inv.id)}', '${escapeHtml(inv.invoiceNo)}')" class="btn-interactive w-7 h-7 inline-flex items-center justify-center p-0 bg-red-50 hover:bg-red-100 text-red-600 rounded text-xs" title="Delete Invoice"><i class="fa-solid fa-trash"></i></button>` : ''}
             </div>
           </td>
         </tr>
@@ -3014,7 +3253,8 @@
           const m = memberMap[inv.memberId] || { name: 'Unknown', phone: '', batch: '—' };
           const due = new Date(inv.dueDate);
           const diffDays = Math.max(0, Math.floor((today - due) / (1000 * 60 * 60 * 24)));
-          const waText = encodeURIComponent(`Dear ${m.name}, your fee invoice ${inv.invoiceNo} (${inv.title}) has an outstanding balance of ${formatMoney(inv.balance)} (Due: ${inv.dueDate}). Kindly clear your dues at your earliest convenience. - UniFee Pro`);
+          const orgName = (AppState.orgProfile && AppState.orgProfile.name) || 'UniFee Pro';
+          const waText = encodeURIComponent(`Dear ${m.name}, your fee invoice ${inv.invoiceNo} (${inv.title}) has an outstanding balance of ${formatMoney(inv.balance)} (Due: ${inv.dueDate}). Kindly clear your dues at your earliest convenience. - ${orgName}`);
           const cleanPhone = String(m.phone || '').replace(/[^0-9]/g, '');
           return `
         <tr>
@@ -3061,8 +3301,8 @@
           <td>${escapeHtml(u.createdAt || '2025-01-01')}</td>
           <td>
             <div class="flex items-center gap-1">
-              <button type="button" onclick="window.AppController.openUserModal('${escapeHtml(u.id)}')" class="btn-interactive px-2.5 py-1 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded text-xs font-semibold"><i class="fa-solid fa-pen"></i></button>
-              ${u.username !== 'admin' ? `<button type="button" onclick="window.AppController.deleteRecord('users', '${escapeHtml(u.id)}', '${escapeHtml(u.fullname)}')" class="btn-interactive px-2.5 py-1 bg-red-50 hover:bg-red-100 text-red-600 rounded text-xs font-semibold"><i class="fa-solid fa-trash"></i></button>` : ''}
+              <button type="button" onclick="window.AppController.openUserModal('${escapeHtml(u.id)}')" class="btn-interactive w-7 h-7 inline-flex items-center justify-center p-0 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded text-xs font-semibold" title="Edit User"><i class="fa-solid fa-pen"></i></button>
+              ${u.username !== 'admin' ? `<button type="button" onclick="window.AppController.deleteRecord('users', '${escapeHtml(u.id)}', '${escapeHtml(u.fullname)}')" class="btn-interactive w-7 h-7 inline-flex items-center justify-center p-0 bg-red-50 hover:bg-red-100 text-red-600 rounded text-xs font-semibold" title="Delete User"><i class="fa-solid fa-trash"></i></button>` : ''}
             </div>
           </td>
         </tr>
@@ -3497,8 +3737,42 @@
         const inv = await DB.getByKey('invoices', invoiceId);
         if (!inv) return;
         const m = await DB.getByKey('members', inv.memberId) || { name: 'Unknown', code: '—', batch: '—', orgType: 'General' };
+        const org = AppState.orgProfile || DEFAULT_ORG_PROFILE;
 
-        document.getElementById('receipt-org-subtitle').textContent = `${m.orgType} Official Fee & Billing Voucher`;
+        const receiptName = document.getElementById('receipt-org-name');
+        if (receiptName) receiptName.textContent = (org.name || 'UniFee Pro Enterprise').toUpperCase();
+
+        const receiptSub = document.getElementById('receipt-org-subtitle');
+        if (receiptSub) receiptSub.textContent = org.description || `${m.orgType} Official Fee & Billing Voucher`;
+
+        const receiptContact = document.getElementById('receipt-org-contact');
+        if (receiptContact) {
+          const parts = [];
+          if (org.address) parts.push(org.address);
+          if (org.phone) parts.push(`Tel: ${org.phone}`);
+          if (org.email) parts.push(`Email: ${org.email}`);
+          receiptContact.textContent = parts.length ? parts.join(' | ') : 'Official Institutional Voucher';
+        }
+
+        const receiptLogo = document.getElementById('receipt-org-logo');
+        const receiptIcon = document.getElementById('receipt-org-icon');
+        if (receiptLogo && receiptIcon) {
+          if (org.logoDataUrl) {
+            receiptLogo.src = org.logoDataUrl;
+            receiptLogo.classList.remove('hidden');
+            receiptIcon.classList.add('hidden');
+          } else {
+            receiptLogo.classList.add('hidden');
+            receiptIcon.classList.remove('hidden');
+          }
+        }
+
+        const receiptNote = document.getElementById('receipt-note-text');
+        if (receiptNote) receiptNote.textContent = org.receiptNote || 'Computer generated official receipt. Valid without signature.';
+
+        const receiptStamp = document.getElementById('receipt-stamp-title');
+        if (receiptStamp) receiptStamp.textContent = org.receiptStampText || 'Authorized Cashier Stamp';
+
         document.getElementById('receipt-inv-no').textContent = inv.invoiceNo;
         document.getElementById('receipt-date').textContent = `Issued: ${inv.updatedAt || new Date().toISOString().split('T')[0]}`;
         document.getElementById('receipt-status-badge').textContent = inv.status;
@@ -3686,13 +3960,20 @@
       async checkAutoBackupSchedule() {
         const cfg = await DB.getByKey('settings', 'backupConfig');
         if (!cfg) return;
-        $('#backup-schedule-mode').val(cfg.mode).trigger('change');
-        document.getElementById('backup-custom-days').value = cfg.customDays || 3;
+        const backupModeEl = document.getElementById('backup-schedule-mode');
+        if (backupModeEl) backupModeEl.value = cfg.mode;
+        if (window.jQuery && $('#backup-schedule-mode').hasClass('select2-hidden-accessible')) {
+          $('#backup-schedule-mode').trigger('change.select2');
+        }
+        const customDaysInput = document.getElementById('backup-custom-days');
+        if (customDaysInput) customDaysInput.value = cfg.customDays || 3;
         const customDaysEl = document.getElementById('custom-days-wrapper');
         if (customDaysEl) {
           if (cfg.mode === 'custom') customDaysEl.classList.remove('hidden');
           else customDaysEl.classList.add('hidden');
         }
+        const badgeEl = document.getElementById('sidebar-backup-badge');
+        if (badgeEl) badgeEl.textContent = (cfg.mode || 'daily').toUpperCase();
 
         const elapsedDays = (Date.now() - (cfg.lastBackupTimestamp || 0)) / (1000 * 60 * 60 * 24);
         let thresholdDays = 9999;
@@ -3701,14 +3982,15 @@
         if (cfg.mode === 'custom') thresholdDays = parseFloat(cfg.customDays) || 3;
 
         const lastDateStr = new Date(cfg.lastBackupTimestamp || Date.now()).toLocaleDateString();
-        document.getElementById('sidebar-last-backup').textContent = `Snapshot verified: ${lastDateStr} (${cfg.mode.toUpperCase()})`;
+        const lastBackupEl = document.getElementById('sidebar-last-backup');
+        if (lastBackupEl) lastBackupEl.textContent = `Snapshot verified: ${lastDateStr} (${cfg.mode.toUpperCase()})`;
 
         if (cfg.mode !== 'manual' && elapsedDays >= thresholdDays) {
           await this.triggerEncryptedBackup(true);
         }
       },
 
-      async updateBackupSchedule() {
+      async updateBackupSchedule(isUserAction = true) {
         const mode = document.getElementById('backup-schedule-mode').value;
         const customDays = parseInt(document.getElementById('backup-custom-days').value || '3', 10);
         const customDaysEl = document.getElementById('custom-days-wrapper');
@@ -3716,30 +3998,35 @@
           if (mode === 'custom') customDaysEl.classList.remove('hidden');
           else customDaysEl.classList.add('hidden');
         }
+        const existingCfg = (await DB.getByKey('settings', 'backupConfig')) || {};
         await DB.put('settings', {
           key: 'backupConfig',
           mode,
           customDays,
-          lastBackupTimestamp: Date.now()
+          lastBackupTimestamp: existingCfg.lastBackupTimestamp || Date.now()
         });
-        document.getElementById('sidebar-backup-badge').textContent = mode.toUpperCase();
-        Toast.fire({ icon: 'success', title: `Auto-backup schedule updated (${mode})` });
+        const badgeEl = document.getElementById('sidebar-backup-badge');
+        if (badgeEl) badgeEl.textContent = mode.toUpperCase();
+        if (isUserAction !== false) {
+          Toast.fire({ icon: 'success', title: `Auto-backup schedule updated (${mode})` });
+        }
       },
 
       async triggerEncryptedBackup(isSilentAuto = false) {
-        const [users, members, plans, invoices, themes] = await Promise.all([
+        const [users, members, plans, invoices, themes, settings] = await Promise.all([
           DB.getAll('users'),
           DB.getAll('members'),
           DB.getAll('plans'),
           DB.getAll('invoices'),
-          DB.getAll('themes')
+          DB.getAll('themes'),
+          DB.getAll('settings')
         ]);
 
         const payloadObj = {
           app: APP_CONFIG.appName,
           exportedAt: new Date().toISOString(),
           author: 'Yasin Ullah',
-          data: { users, members, plans, invoices, themes }
+          data: { users, members, plans, invoices, themes, settings }
         };
 
         const jsonPlain = JSON.stringify(payloadObj);
@@ -4211,6 +4498,36 @@
           Toast.fire({ icon: 'success', title: 'Custom theme saved to your user profile' });
         });
 
+        const orgProfileValidator = new JustValidate('#org-profile-form');
+        orgProfileValidator
+          .addField('#org-setting-name', [{ rule: 'required', errorMessage: 'Institution or business name is required' }])
+          .addField('#org-setting-phone', [{ rule: 'required', errorMessage: 'Phone number is required' }])
+          .addField('#org-setting-address', [{ rule: 'required', errorMessage: 'Address is required' }])
+          .addField('#org-setting-currency', [{ rule: 'required', errorMessage: 'Currency symbol or money sign is required' }])
+          .onSuccess(async (event) => {
+            event.preventDefault();
+            const updated = {
+              key: 'orgProfile',
+              name: document.getElementById('org-setting-name').value.trim(),
+              type: document.getElementById('org-setting-type').value,
+              description: document.getElementById('org-setting-desc').value.trim(),
+              phone: document.getElementById('org-setting-phone').value.trim(),
+              email: document.getElementById('org-setting-email').value.trim(),
+              address: document.getElementById('org-setting-address').value.trim(),
+              currencySymbol: document.getElementById('org-setting-currency').value.trim() || '$',
+              logoDataUrl: AppState.uploadedOrgLogoDataUrl || '',
+              receiptNote: document.getElementById('org-setting-receipt-note').value.trim() || 'Computer generated official receipt. Valid without signature.',
+              receiptStampText: document.getElementById('org-setting-stamp-title').value.trim() || 'Authorized Cashier Stamp',
+              updatedAt: Date.now()
+            };
+            await DB.put('settings', updated);
+            AppState.orgProfile = updated;
+            AppState.isFormDirty = false;
+            this.applyOrgProfile(updated);
+            await this.refreshAllViews();
+            Toast.fire({ icon: 'success', title: 'Institution profile, receipt and currency settings saved' });
+          });
+
         const restoreValidator = new JustValidate('#restore-backup-form');
         restoreValidator
           .addField('#restore-file-input', [{ rule: 'minFilesCount', value: 1, errorMessage: 'Select a valid .json backup file' }])
@@ -4238,13 +4555,13 @@
               const decryptedBytes = CryptoJS.AES.decrypt(envelope.ciphertext, APP_CONFIG.encryptionSecret);
               const decryptedPlain = decryptedBytes.toString(CryptoJS.enc.Utf8);
               const parsedPayload = JSON.parse(decryptedPlain);
-              const stores = ['users', 'members', 'plans', 'invoices', 'themes'];
+              const stores = ['users', 'members', 'plans', 'invoices', 'themes', 'settings'];
               let importedCount = 0;
               let skippedCount = 0;
 
               for (const storeName of stores) {
                 const list = (parsedPayload.data && parsedPayload.data[storeName]) || [];
-                const keyField = storeName === 'themes' ? 'userId' : 'id';
+                const keyField = storeName === 'themes' ? 'userId' : (storeName === 'settings' ? 'key' : 'id');
                 for (const item of list) {
                   const existing = await DB.getByKey(storeName, item[keyField]);
                   if (existing && duplicateMode === 'skip') {
@@ -4261,6 +4578,7 @@
               }
 
               fileInput.value = '';
+              await this.initOrgProfile();
               await this.refreshAllViews();
               Swal.fire({
                 icon: 'success',

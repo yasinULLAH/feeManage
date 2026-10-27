@@ -3,7 +3,11 @@
 <html class="h-full" lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" name="viewport"/>
+<meta content="#0f172a" name="theme-color"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
 <script>
     (function () {
       try {
@@ -293,17 +297,206 @@
     }
 
     @media (max-width: 767px) {
+      body {
+        -webkit-font-smoothing: antialiased;
+        overscroll-behavior-y: contain;
+      }
+
       #unified-nav {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: 40;
-        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 40 !important;
+        height: calc(60px + env(safe-area-inset-bottom, 0px)) !important;
+        padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+        background: rgba(15, 23, 42, 0.96) !important;
+        backdrop-filter: blur(14px) !important;
+        -webkit-backdrop-filter: blur(14px) !important;
+        box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.3) !important;
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
       }
 
       #unified-nav.nav-hidden {
-        transform: translateY(100%);
+        transform: translateY(100%) !important;
+      }
+
+      main.theme-main {
+        padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important;
+        padding-left: 0.65rem !important;
+        padding-right: 0.65rem !important;
+      }
+
+      .tkinter-panel {
+        border-radius: 1rem !important;
+        border: 1px solid #e2e8f0 !important;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 2px 6px rgba(15, 23, 42, 0.02) !important;
+      }
+
+      .fixed.inset-0.z-50.flex.items-center.justify-center {
+        align-items: flex-end !important;
+        padding: 0 !important;
+      }
+
+      .fixed.inset-0.z-50 .tkinter-panel {
+        border-radius: 1.5rem 1.5rem 0 0 !important;
+        max-height: 88vh !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 1.25rem 1rem 2rem 1rem !important;
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.35) !important;
+        animation: androidSheetSlideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+      }
+
+      .fixed.inset-0.z-50 .tkinter-panel::before {
+        content: '';
+        display: block;
+        width: 38px;
+        height: 4px;
+        border-radius: 9999px;
+        background-color: #cbd5e1;
+        margin: -0.25rem auto 1rem auto;
+      }
+
+      @keyframes androidSheetSlideUp {
+        from {
+          transform: translateY(100%);
+        }
+        to {
+          transform: translateY(0);
+        }
+      }
+
+      input, select, textarea {
+        font-size: 15px !important;
+        min-height: 44px !important;
+      }
+
+      .dataTables_wrapper .dataTables_filter {
+        width: 100% !important;
+        margin-bottom: 0.5rem !important;
+      }
+
+      .dataTables_wrapper .dataTables_filter label {
+        display: flex !important;
+        align-items: center !important;
+        width: 100% !important;
+        font-size: 0 !important;
+        position: relative !important;
+      }
+
+      .dataTables_wrapper .dataTables_filter label::before {
+        content: '\f002';
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        position: absolute;
+        left: 14px;
+        font-size: 13px;
+        color: #94a3b8;
+        pointer-events: none;
+      }
+
+      .dataTables_wrapper .dataTables_filter input {
+        width: 100% !important;
+        margin-left: 0 !important;
+        padding-left: 38px !important;
+        padding-right: 12px !important;
+        height: 42px !important;
+        border-radius: 9999px !important;
+        background: #f1f5f9 !important;
+        border: 1px solid #cbd5e1 !important;
+        font-size: 14px !important;
+      }
+
+      .dataTables_wrapper .dt-buttons {
+        width: 100% !important;
+        overflow-x: auto !important;
+        flex-wrap: nowrap !important;
+        padding-bottom: 6px !important;
+        margin-bottom: 0.5rem !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none;
+      }
+
+      .dataTables_wrapper .dt-buttons::-webkit-scrollbar {
+        display: none;
+      }
+
+      .dataTables_wrapper .dt-button {
+        flex-shrink: 0 !important;
+        border-radius: 9999px !important;
+        font-size: 12px !important;
+        padding: 6px 14px !important;
+      }
+
+      .dataTables_wrapper .dataTables_info {
+        font-size: 11px !important;
+        color: #64748b !important;
+        text-align: center !important;
+        width: 100% !important;
+        margin-top: 0.5rem !important;
+      }
+
+      .dataTables_wrapper .dataTables_paginate {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        width: 100% !important;
+        margin-top: 0.5rem !important;
+        gap: 4px !important;
+      }
+
+      .dataTables_wrapper .dataTables_paginate .paginate_button {
+        min-width: 36px !important;
+        min-height: 36px !important;
+        border-radius: 9999px !important;
+        font-size: 12px !important;
+        padding: 0 !important;
+      }
+
+      table.dataTable tr.child {
+        background-color: #f8fafc !important;
+      }
+      table.dataTable tr.child td {
+        padding: 10px 12px !important;
+      }
+      table.dataTable tr.child ul.dtr-details {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        list-style: none !important;
+      }
+      table.dataTable tr.child ul.dtr-details li {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 6px 0 !important;
+        border-bottom: 1px dashed #e2e8f0 !important;
+      }
+      table.dataTable tr.child ul.dtr-details li:last-child {
+        border-bottom: none !important;
+      }
+      table.dataTable tr.child span.dtr-title {
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        color: #64748b !important;
+      }
+      table.dataTable tr.child span.dtr-data {
+        font-size: 12px !important;
+        font-weight: 500 !important;
+        color: #0f172a !important;
+        text-align: right !important;
+      }
+
+      .btn-interactive:active {
+        transform: scale(0.96) !important;
       }
     }
 
@@ -468,48 +661,49 @@
 </footer>
 </div>
 <div class="hidden flex-1 flex flex-col min-h-screen no-print" id="app-shell">
-<header class="theme-header sticky top-0 z-30 border-b border-slate-700/60 shadow-sm px-3 sm:px-6 py-2.5">
-<div class="flex flex-wrap items-center justify-between gap-2">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-lg shadow-inner overflow-hidden shrink-0" id="org-header-logo-wrapper">
+<header class="theme-header sticky top-0 z-30 border-b border-slate-700/60 shadow-sm px-3 sm:px-6 py-2">
+<div class="flex items-center justify-between w-full gap-2">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-base sm:text-lg shadow-inner overflow-hidden shrink-0" id="org-header-logo-wrapper">
 <img alt="Logo" class="w-full h-full object-cover hidden" id="org-header-logo-img"/>
 <i class="fa-solid fa-building-columns" id="org-header-logo-icon"></i>
 </div>
 <div>
-<div class="flex items-center gap-2">
-<h1 class="font-bold text-sm sm:text-base tracking-tight truncate max-w-[180px] sm:max-w-xs md:max-w-md" id="org-header-title">
-                UniFee Pro Enterprise</h1>
-<span class="px-2 py-0.5 text-[11px] font-semibold rounded bg-blue-500/20 text-blue-200 border border-blue-400/30" id="org-mode-badge">All-in-One
-                Mode</span>
+<div class="flex items-center gap-1.5">
+<h1 class="font-bold text-sm sm:text-base tracking-tight truncate max-w-[150px] sm:max-w-xs md:max-w-md text-white" id="org-header-title">UniFee Pro Enterprise</h1>
+<span class="hidden sm:inline px-2 py-0.5 text-[11px] font-semibold rounded bg-blue-500/20 text-blue-200 border border-blue-400/30" id="org-mode-badge">All-in-One Mode</span>
 </div>
 <p class="text-[11px] opacity-75 hidden sm:block">
 <span class="font-medium mr-2" id="org-header-desc">Universal Fee &amp; Billing Engine</span>
-              Route: <code class="font-mono text-amber-300" id="virtual-route-display">/dashboard</code> | Idle: <span id="idle-countdown-display">40:00</span>
+Route: <code class="font-mono text-amber-300" id="virtual-route-display">/dashboard</code> | Idle: <span id="idle-countdown-display">40:00</span>
 </p>
+<div class="text-[10px] text-blue-300 font-medium sm:hidden flex items-center gap-1">
+<span id="mobile-route-label">Dashboard</span> • <span id="mobile-mode-badge-label">Universal</span>
 </div>
 </div>
-<div class="flex items-center gap-2 sm:gap-3">
+</div>
+<div class="hidden md:flex items-center gap-2 sm:gap-3">
 <div class="hidden lg:flex items-center gap-1.5 bg-slate-800/80 border border-slate-700 rounded-md px-2.5 py-1 text-xs">
 <span class="opacity-75">Preset:</span>
 <select class="bg-transparent font-semibold text-white focus:outline-none" id="global-org-preset" onchange="window.AppController.changeOrgPreset(this.value)">
 <option class="text-slate-900" value="Universal">Universal (All Entities)</option>
 <option class="text-slate-900" value="School/College">School / College / University</option>
-<option class="text-slate-900" value="Academy/Coaching">Academy / Training Center</option>
+<option class="text-slate-900" value="Academy/Coaching">Academy / Coaching Center</option>
 <option class="text-slate-900" value="Gym/Club">Fitness Gym / Sports Club</option>
 <option class="text-slate-900" value="Coworking/Rental">Co-working / Property / SaaS</option>
 </select>
 </div>
 <button class="btn-interactive h-9 px-3 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-md shadow inline-flex items-center justify-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-emerald-400" onclick="window.AppController.openQuickCollectModal()" type="button">
 <i class="fa-solid fa-cash-register"></i>
-<span class="hidden sm:inline">Quick Fee Collect</span>
+<span>Quick Fee Collect</span>
 </button>
 <button class="btn-interactive h-9 px-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-md border border-slate-600 text-xs inline-flex items-center justify-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-blue-400" onclick="window.AppController.openPasswordModal()" title="Change Password" type="button">
 <i class="fa-solid fa-key"></i>
-<span class="hidden md:inline">Password</span>
+<span>Password</span>
 </button>
 <button class="btn-interactive h-9 px-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-md border border-slate-600 text-xs inline-flex items-center justify-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-blue-400" onclick="window.AppController.openSampleDataModal()" title="Clear or Load Sample Data" type="button">
 <i class="fa-solid fa-database text-blue-400"></i>
-<span class="hidden md:inline">Sample Data</span>
+<span>Sample Data</span>
 </button>
 <div class="flex items-center gap-2 pl-2 border-l border-slate-700">
 <div class="text-right hidden sm:block">
@@ -521,41 +715,48 @@
 </button>
 </div>
 </div>
+<div class="flex md:hidden items-center gap-2">
+<button class="btn-interactive w-9 h-9 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white shadow text-xs flex items-center justify-center active:scale-95" onclick="window.AppController.openQuickCollectModal()" title="Quick Fee Collect" type="button">
+<i class="fa-solid fa-cash-register"></i>
+</button>
+<button class="btn-interactive w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 shadow text-sm flex items-center justify-center active:scale-95" onclick="window.AppController.toggleMobileMoreSheet(true)" title="Menu" type="button">
+<i class="fa-solid fa-ellipsis-vertical"></i>
+</button>
+</div>
 </div>
 </header>
 <div class="flex-1 flex flex-col md:flex-row">
 <nav aria-label="Main Navigation" class="theme-sidebar md:w-60 md:shrink-0 border-t md:border-t-0 md:border-r border-slate-700/60 shadow-lg md:shadow-none" id="unified-nav">
-<div class="flex md:flex-col justify-around md:justify-start p-1.5 md:p-3 gap-1 overflow-x-auto">
-<button class="nav-item btn-interactive flex flex-col md:flex-row items-center gap-1 md:gap-3 px-2.5 md:px-3.5 py-2 md:py-2.5 rounded-md text-[11px] md:text-xs font-semibold transition-colors w-full text-left focus:outline-none focus:ring-2 focus:ring-blue-400" data-route="/dashboard" onclick="window.AppController.navigate('/dashboard')" type="button">
-<i class="fa-solid fa-chart-pie text-sm md:w-5 text-center"></i>
+<div class="hidden md:flex md:flex-col justify-start p-3 gap-1">
+<button class="nav-item btn-interactive flex items-center gap-3 px-3.5 py-2.5 rounded-md text-xs font-semibold transition-colors w-full text-left focus:outline-none focus:ring-2 focus:ring-blue-400" data-route="/dashboard" onclick="window.AppController.navigate('/dashboard')" type="button">
+<i class="fa-solid fa-chart-pie text-sm w-5 text-center"></i>
 <span>Dashboard</span>
 </button>
-<button class="nav-item btn-interactive flex flex-col md:flex-row items-center gap-1 md:gap-3 px-2.5 md:px-3.5 py-2 md:py-2.5 rounded-md text-[11px] md:text-xs font-semibold transition-colors w-full text-left focus:outline-none focus:ring-2 focus:ring-blue-400" data-route="/members" onclick="window.AppController.navigate('/members')" type="button">
-<i class="fa-solid fa-users text-sm md:w-5 text-center"></i>
+<button class="nav-item btn-interactive flex items-center gap-3 px-3.5 py-2.5 rounded-md text-xs font-semibold transition-colors w-full text-left focus:outline-none focus:ring-2 focus:ring-blue-400" data-route="/members" onclick="window.AppController.navigate('/members')" type="button">
+<i class="fa-solid fa-users text-sm w-5 text-center"></i>
 <span id="nav-label-members">Members / Students</span>
 </button>
-<button class="nav-item btn-interactive flex flex-col md:flex-row items-center gap-1 md:gap-3 px-2.5 md:px-3.5 py-2 md:py-2.5 rounded-md text-[11px] md:text-xs font-semibold transition-colors w-full text-left focus:outline-none focus:ring-2 focus:ring-blue-400" data-route="/plans" onclick="window.AppController.navigate('/plans')" type="button">
-<i class="fa-solid fa-layer-group text-sm md:w-5 text-center"></i>
+<button class="nav-item btn-interactive flex items-center gap-3 px-3.5 py-2.5 rounded-md text-xs font-semibold transition-colors w-full text-left focus:outline-none focus:ring-2 focus:ring-blue-400" data-route="/plans" onclick="window.AppController.navigate('/plans')" type="button">
+<i class="fa-solid fa-layer-group text-sm w-5 text-center"></i>
 <span>Fee Structures</span>
 </button>
-<button class="nav-item btn-interactive flex flex-col md:flex-row items-center gap-1 md:gap-3 px-2.5 md:px-3.5 py-2 md:py-2.5 rounded-md text-[11px] md:text-xs font-semibold transition-colors w-full text-left focus:outline-none focus:ring-2 focus:ring-blue-400" data-route="/invoices" onclick="window.AppController.navigate('/invoices')" type="button">
-<i class="fa-solid fa-file-invoice-dollar text-sm md:w-5 text-center"></i>
+<button class="nav-item btn-interactive flex items-center gap-3 px-3.5 py-2.5 rounded-md text-xs font-semibold transition-colors w-full text-left focus:outline-none focus:ring-2 focus:ring-blue-400" data-route="/invoices" onclick="window.AppController.navigate('/invoices')" type="button">
+<i class="fa-solid fa-file-invoice-dollar text-sm w-5 text-center"></i>
 <span>Invoices &amp; Ledgers</span>
 </button>
-<button class="nav-item btn-interactive flex flex-col md:flex-row items-center gap-1 md:gap-3 px-2.5 md:px-3.5 py-2 md:py-2.5 rounded-md text-[11px] md:text-xs font-semibold transition-colors w-full text-left focus:outline-none focus:ring-2 focus:ring-blue-400" data-route="/defaulters" onclick="window.AppController.navigate('/defaulters')" type="button">
-<i class="fa-solid fa-bell text-sm md:w-5 text-center text-amber-400"></i>
+<button class="nav-item btn-interactive flex items-center gap-3 px-3.5 py-2.5 rounded-md text-xs font-semibold transition-colors w-full text-left focus:outline-none focus:ring-2 focus:ring-blue-400" data-route="/defaulters" onclick="window.AppController.navigate('/defaulters')" type="button">
+<i class="fa-solid fa-bell text-sm w-5 text-center text-amber-400"></i>
 <span>Dues &amp; Reminders</span>
 </button>
-<button class="nav-item btn-interactive flex flex-col md:flex-row items-center gap-1 md:gap-3 px-2.5 md:px-3.5 py-2 md:py-2.5 rounded-md text-[11px] md:text-xs font-semibold transition-colors w-full text-left focus:outline-none focus:ring-2 focus:ring-blue-400" data-route="/users" id="nav-users-btn" onclick="window.AppController.navigate('/users')" type="button">
-<i class="fa-solid fa-user-shield text-sm md:w-5 text-center"></i>
+<button class="nav-item btn-interactive flex items-center gap-3 px-3.5 py-2.5 rounded-md text-xs font-semibold transition-colors w-full text-left focus:outline-none focus:ring-2 focus:ring-blue-400" data-route="/users" id="nav-users-btn" onclick="window.AppController.navigate('/users')" type="button">
+<i class="fa-solid fa-user-shield text-sm w-5 text-center"></i>
 <span>Users &amp; RBAC</span>
 </button>
-<button class="nav-item btn-interactive flex flex-col md:flex-row items-center gap-1 md:gap-3 px-2.5 md:px-3.5 py-2 md:py-2.5 rounded-md text-[11px] md:text-xs font-semibold transition-colors w-full text-left focus:outline-none focus:ring-2 focus:ring-blue-400" data-route="/settings" onclick="window.AppController.navigate('/settings')" type="button">
-<i class="fa-solid fa-sliders text-sm md:w-5 text-center"></i>
+<button class="nav-item btn-interactive flex items-center gap-3 px-3.5 py-2.5 rounded-md text-xs font-semibold transition-colors w-full text-left focus:outline-none focus:ring-2 focus:ring-blue-400" data-route="/settings" onclick="window.AppController.navigate('/settings')" type="button">
+<i class="fa-solid fa-sliders text-sm w-5 text-center"></i>
 <span>Settings &amp; Backups</span>
 </button>
-</div>
-<div class="hidden md:block mt-6 mx-3 p-3 rounded-lg bg-slate-800/90 border border-slate-700 text-xs space-y-2">
+<div class="mt-6 p-3 rounded-lg bg-slate-800/90 border border-slate-700 text-xs space-y-2">
 <div class="flex items-center justify-between text-slate-300 font-semibold">
 <span><i class="fa-solid fa-shield-halved text-emerald-400 mr-1"></i> Auto-Backup</span>
 <span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px]" id="sidebar-backup-badge">Active</span>
@@ -563,7 +764,41 @@
 <p class="text-[11px] text-slate-400" id="sidebar-last-backup">Last encrypted snapshot: Verified</p>
 <button class="btn-interactive w-full py-1.5 px-2 bg-blue-600/30 hover:bg-blue-600/50 border border-blue-500/40 rounded text-blue-200 font-semibold text-[11px] flex items-center justify-center gap-1" onclick="window.AppController.triggerEncryptedBackup(false)" type="button">
 <i class="fa-solid fa-download"></i> Instant Encrypted Export
-          </button>
+</button>
+</div>
+</div>
+<div class="flex md:hidden items-center justify-around w-full h-full px-1">
+<button class="mobile-nav-btn flex-1 flex flex-col items-center justify-center py-1 select-none active:scale-95" data-route="/dashboard" onclick="window.AppController.navigate('/dashboard')" type="button">
+<div class="mobile-pill w-12 h-7 rounded-full flex items-center justify-center transition-all bg-blue-600/25 text-blue-400 ring-1 ring-blue-500/40">
+<i class="fa-solid fa-chart-pie text-sm"></i>
+</div>
+<span class="mobile-nav-text text-[10px] font-bold text-blue-400 mt-0.5">Home</span>
+</button>
+<button class="mobile-nav-btn flex-1 flex flex-col items-center justify-center py-1 select-none active:scale-95" data-route="/members" onclick="window.AppController.navigate('/members')" type="button">
+<div class="mobile-pill w-12 h-7 rounded-full flex items-center justify-center transition-all text-slate-400">
+<i class="fa-solid fa-users text-sm"></i>
+</div>
+<span class="mobile-nav-text text-[10px] font-medium text-slate-400 mt-0.5" id="mobile-nav-members-label">Members</span>
+</button>
+<button class="mobile-nav-btn flex-1 flex flex-col items-center justify-center py-1 select-none active:scale-95" data-route="/invoices" onclick="window.AppController.navigate('/invoices')" type="button">
+<div class="mobile-pill w-12 h-7 rounded-full flex items-center justify-center transition-all text-slate-400">
+<i class="fa-solid fa-file-invoice-dollar text-sm"></i>
+</div>
+<span class="mobile-nav-text text-[10px] font-medium text-slate-400 mt-0.5">Invoices</span>
+</button>
+<button class="mobile-nav-btn flex-1 flex flex-col items-center justify-center py-1 select-none active:scale-95" data-route="/defaulters" onclick="window.AppController.navigate('/defaulters')" type="button">
+<div class="mobile-pill w-12 h-7 rounded-full flex items-center justify-center transition-all text-slate-400 relative">
+<i class="fa-solid fa-bell text-sm"></i>
+<span class="hidden absolute top-0.5 right-2 w-2 h-2 rounded-full bg-red-500 animate-pulse" id="mobile-overdue-dot"></span>
+</div>
+<span class="mobile-nav-text text-[10px] font-medium text-slate-400 mt-0.5">Dues</span>
+</button>
+<button class="mobile-nav-btn flex-1 flex flex-col items-center justify-center py-1 select-none active:scale-95" id="mobile-more-btn" onclick="window.AppController.toggleMobileMoreSheet(true)" type="button">
+<div class="mobile-pill w-12 h-7 rounded-full flex items-center justify-center transition-all text-slate-400">
+<i class="fa-solid fa-bars text-sm"></i>
+</div>
+<span class="mobile-nav-text text-[10px] font-medium text-slate-400 mt-0.5">More</span>
+</button>
 </div>
 </nav>
 <main class="theme-main flex-1 p-3 sm:p-6 pb-24 md:pb-8 overflow-x-hidden flex flex-col justify-between">
@@ -605,41 +840,41 @@
                 </button>
 </div>
 </div>
-<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-<div class="tkinter-panel p-4 border-l-4 border-l-emerald-600">
+<div class="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-4 gap-2.5 sm:gap-4">
+<div class="tkinter-panel p-3 sm:p-4 border-l-4 border-l-emerald-600">
 <div class="flex items-center justify-between">
-<span class="text-xs font-bold uppercase tracking-wider text-slate-500">Total Collected</span>
-<span class="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center"><i class="fa-solid fa-sack-dollar"></i></span>
+<span class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-slate-500 truncate">Total Collected</span>
+<span class="w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs sm:text-sm shrink-0"><i class="fa-solid fa-sack-dollar"></i></span>
 </div>
-<div class="text-2xl font-extrabold text-slate-900 mt-2" id="kpi-collected">$0.00</div>
-<div class="text-[11px] text-emerald-700 font-medium mt-1"><i class="fa-solid fa-circle-check mr-1"></i>
+<div class="text-lg sm:text-2xl font-extrabold text-slate-900 mt-1 sm:mt-2 truncate" id="kpi-collected">$0.00</div>
+<div class="text-[10px] sm:text-[11px] text-emerald-700 font-medium mt-1 truncate"><i class="fa-solid fa-circle-check mr-1"></i>
                   Verified paid receipts</div>
 </div>
-<div class="tkinter-panel p-4 border-l-4 border-l-amber-500">
+<div class="tkinter-panel p-3 sm:p-4 border-l-4 border-l-amber-500">
 <div class="flex items-center justify-between">
-<span class="text-xs font-bold uppercase tracking-wider text-slate-500">Pending Receivables</span>
-<span class="w-9 h-9 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center"><i class="fa-solid fa-clock-rotate-left"></i></span>
+<span class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-slate-500 truncate">Pending</span>
+<span class="w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center text-xs sm:text-sm shrink-0"><i class="fa-solid fa-clock-rotate-left"></i></span>
 </div>
-<div class="text-2xl font-extrabold text-slate-900 mt-2" id="kpi-pending">$0.00</div>
-<div class="text-[11px] text-amber-700 font-medium mt-1"><i class="fa-solid fa-hourglass-half mr-1"></i>
+<div class="text-lg sm:text-2xl font-extrabold text-slate-900 mt-1 sm:mt-2 truncate" id="kpi-pending">$0.00</div>
+<div class="text-[10px] sm:text-[11px] text-amber-700 font-medium mt-1 truncate"><i class="fa-solid fa-hourglass-half mr-1"></i>
                   Active open balances</div>
 </div>
-<div class="tkinter-panel p-4 border-l-4 border-l-red-600">
+<div class="tkinter-panel p-3 sm:p-4 border-l-4 border-l-red-600">
 <div class="flex items-center justify-between">
-<span class="text-xs font-bold uppercase tracking-wider text-slate-500">Overdue &amp; Fines</span>
-<span class="w-9 h-9 rounded-lg bg-red-50 text-red-600 flex items-center justify-center"><i class="fa-solid fa-triangle-exclamation"></i></span>
+<span class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-slate-500 truncate">Overdue</span>
+<span class="w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-red-50 text-red-600 flex items-center justify-center text-xs sm:text-sm shrink-0"><i class="fa-solid fa-triangle-exclamation"></i></span>
 </div>
-<div class="text-2xl font-extrabold text-red-600 mt-2" id="kpi-overdue">$0.00</div>
-<div class="text-[11px] text-red-700 font-medium mt-1" id="kpi-overdue-count">0 defaulters require
+<div class="text-lg sm:text-2xl font-extrabold text-red-600 mt-1 sm:mt-2 truncate" id="kpi-overdue">$0.00</div>
+<div class="text-[10px] sm:text-[11px] text-red-700 font-medium mt-1 truncate" id="kpi-overdue-count">0 defaulters require
                   follow-up</div>
 </div>
-<div class="tkinter-panel p-4 border-l-4 border-l-blue-600">
+<div class="tkinter-panel p-3 sm:p-4 border-l-4 border-l-blue-600">
 <div class="flex items-center justify-between">
-<span class="text-xs font-bold uppercase tracking-wider text-slate-500">Active Members / Plans</span>
-<span class="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><i class="fa-solid fa-user-graduate"></i></span>
+<span class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-slate-500 truncate">Active Members</span>
+<span class="w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-xs sm:text-sm shrink-0"><i class="fa-solid fa-user-graduate"></i></span>
 </div>
-<div class="text-2xl font-extrabold text-slate-900 mt-2" id="kpi-members">0</div>
-<div class="text-[11px] text-blue-700 font-medium mt-1" id="kpi-plans-sub">Across 0 fee structures</div>
+<div class="text-lg sm:text-2xl font-extrabold text-slate-900 mt-1 sm:mt-2 truncate" id="kpi-members">0</div>
+<div class="text-[10px] sm:text-[11px] text-blue-700 font-medium mt-1 truncate" id="kpi-plans-sub">Across 0 fee structures</div>
 </div>
 </div>
 <div class="tkinter-panel p-4 sm:p-5">
@@ -1201,6 +1436,105 @@
 </main>
 </div>
 </div>
+<div class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-xs flex flex-col justify-end no-print" id="mobile-more-sheet" onclick="if(event.target === this) window.AppController.toggleMobileMoreSheet(false)">
+<div class="w-full bg-slate-900 text-slate-100 rounded-t-3xl border-t border-slate-700/80 p-4 pb-8 max-h-[85vh] overflow-y-auto animate__animated animate__fadeInUp">
+<div class="w-10 h-1 bg-slate-600 rounded-full mx-auto mb-4"></div>
+<div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-800">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow">
+<i class="fa-solid fa-user"></i>
+</div>
+<div>
+<div class="font-bold text-sm text-white" id="sheet-user-name">Admin</div>
+<div class="text-[11px] text-emerald-400 font-semibold" id="sheet-user-role">Administrator</div>
+</div>
+</div>
+<button class="btn-interactive w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center" onclick="window.AppController.toggleMobileMoreSheet(false)" type="button">
+<i class="fa-solid fa-xmark"></i>
+</button>
+</div>
+<div class="mb-3 px-3 py-2 bg-slate-800/80 rounded-xl border border-slate-700/60 flex items-center justify-between text-xs">
+<span class="text-slate-400 font-medium">Domain Preset:</span>
+<select class="bg-transparent font-semibold text-white focus:outline-none" id="mobile-sheet-preset" onchange="window.AppController.changeOrgPreset(this.value)">
+<option class="text-slate-900" value="Universal">Universal (All Entities)</option>
+<option class="text-slate-900" value="School/College">School / College / University</option>
+<option class="text-slate-900" value="Academy/Coaching">Academy / Coaching Center</option>
+<option class="text-slate-900" value="Gym/Club">Fitness Gym / Sports Club</option>
+<option class="text-slate-900" value="Coworking/Rental">Co-working / Property / SaaS</option>
+</select>
+</div>
+<div class="space-y-1.5 text-xs font-semibold">
+<button class="btn-interactive w-full flex items-center justify-between p-3 rounded-xl bg-slate-800/40 hover:bg-slate-800 active:bg-slate-700 text-slate-200" onclick="window.AppController.navigate('/plans'); window.AppController.toggleMobileMoreSheet(false);" type="button">
+<div class="flex items-center gap-3">
+<span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center"><i class="fa-solid fa-layer-group"></i></span>
+<div class="text-left">
+<div class="font-bold text-slate-100">Fee Structures &amp; Plans</div>
+<div class="text-[10px] text-slate-400 font-normal">Tuition, subscription packages &amp; late fine rules</div>
+</div>
+</div>
+<i class="fa-solid fa-chevron-right text-slate-500 text-xs"></i>
+</button>
+<button class="btn-interactive w-full flex items-center justify-between p-3 rounded-xl bg-slate-800/40 hover:bg-slate-800 active:bg-slate-700 text-slate-200" id="sheet-users-btn" onclick="window.AppController.navigate('/users'); window.AppController.toggleMobileMoreSheet(false);" type="button">
+<div class="flex items-center gap-3">
+<span class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center"><i class="fa-solid fa-user-shield"></i></span>
+<div class="text-left">
+<div class="font-bold text-slate-100">Users &amp; RBAC Access</div>
+<div class="text-[10px] text-slate-400 font-normal">Manage cashier and administrator accounts</div>
+</div>
+</div>
+<i class="fa-solid fa-chevron-right text-slate-500 text-xs"></i>
+</button>
+<button class="btn-interactive w-full flex items-center justify-between p-3 rounded-xl bg-slate-800/40 hover:bg-slate-800 active:bg-slate-700 text-slate-200" onclick="window.AppController.navigate('/settings'); window.AppController.toggleMobileMoreSheet(false);" type="button">
+<div class="flex items-center gap-3">
+<span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center"><i class="fa-solid fa-sliders"></i></span>
+<div class="text-left">
+<div class="font-bold text-slate-100">Settings &amp; Branding</div>
+<div class="text-[10px] text-slate-400 font-normal">Institution profile, logos, currency and receipts</div>
+</div>
+</div>
+<i class="fa-solid fa-chevron-right text-slate-500 text-xs"></i>
+</button>
+<div class="grid grid-cols-2 gap-2 pt-2">
+<button class="btn-interactive flex items-center gap-2 p-2.5 rounded-xl bg-slate-800/60 hover:bg-slate-800 active:bg-slate-700 text-slate-300" onclick="window.AppController.openPasswordModal(); window.AppController.toggleMobileMoreSheet(false);" type="button">
+<i class="fa-solid fa-key text-amber-400"></i>
+<span>Password</span>
+</button>
+<button class="btn-interactive flex items-center gap-2 p-2.5 rounded-xl bg-slate-800/60 hover:bg-slate-800 active:bg-slate-700 text-slate-300" onclick="window.AppController.openSampleDataModal(); window.AppController.toggleMobileMoreSheet(false);" type="button">
+<i class="fa-solid fa-database text-blue-400"></i>
+<span>Sample Data</span>
+</button>
+</div>
+<button class="btn-interactive w-full flex items-center justify-center gap-2 p-2.5 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30" onclick="window.AppController.triggerEncryptedBackup(false); window.AppController.toggleMobileMoreSheet(false);" type="button">
+<i class="fa-solid fa-download"></i>
+<span>Instant Encrypted Backup</span>
+</button>
+<button class="btn-interactive w-full flex items-center justify-center gap-2 p-2.5 rounded-xl bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/30 mt-2" onclick="window.AppController.logoutUser(); window.AppController.toggleMobileMoreSheet(false);" type="button">
+<i class="fa-solid fa-power-off"></i>
+<span>Sign Out</span>
+</button>
+</div>
+</div>
+</div>
+<div class="fixed z-40 right-4 bottom-20 md:hidden flex flex-col items-end gap-2.5 pointer-events-none" id="mobile-fab-container">
+<div class="flex flex-col items-end gap-2 opacity-0 scale-75 translate-y-4 pointer-events-none transition-all duration-200 origin-bottom-right" id="mobile-fab-actions">
+<button class="pointer-events-auto flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-600 text-white shadow-xl text-xs font-bold active:scale-95" onclick="window.AppController.openQuickCollectModal(); window.AppController.toggleMobileFab(false);" type="button">
+<span>Quick Fee Collect</span>
+<span class="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center"><i class="fa-solid fa-cash-register text-xs"></i></span>
+</button>
+<button class="pointer-events-auto flex items-center gap-2 px-4 py-2 rounded-full bg-blue-600 text-white shadow-xl text-xs font-bold active:scale-95" onclick="window.AppController.openInvoiceModal(); window.AppController.toggleMobileFab(false);" type="button">
+<span>Issue Fee Invoice</span>
+<span class="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center"><i class="fa-solid fa-file-circle-plus text-xs"></i></span>
+</button>
+<button class="pointer-events-auto flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-600 text-white shadow-xl text-xs font-bold active:scale-95" onclick="window.AppController.openMemberModal(); window.AppController.toggleMobileFab(false);" type="button">
+<span>Add Member / Student</span>
+<span class="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center"><i class="fa-solid fa-user-plus text-xs"></i></span>
+</button>
+</div>
+<button aria-label="Quick Actions Menu" class="pointer-events-auto w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-700 to-blue-500 text-white shadow-2xl flex items-center justify-center text-xl transition-all duration-200 active:scale-90 border-2 border-white/20" id="mobile-fab-btn" onclick="window.AppController.toggleMobileFab()" type="button">
+<i class="fa-solid fa-plus transition-transform duration-200" id="mobile-fab-icon"></i>
+</button>
+</div>
+<div class="hidden fixed inset-0 z-30 bg-slate-950/40 backdrop-blur-xs md:hidden transition-opacity duration-200" id="mobile-fab-scrim" onclick="window.AppController.toggleMobileFab(false)"></div>
 <div class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto no-print" id="modal-member">
 <div class="tkinter-panel w-full max-w-2xl bg-white p-5 sm:p-6 my-8 animate__animated animate__fadeInUp">
 <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-4">
@@ -2052,6 +2386,50 @@
     }
 
     const AppController = {
+      toggleMobileMoreSheet(show) {
+        const sheet = document.getElementById('mobile-more-sheet');
+        if (!sheet) return;
+        if (show) {
+          if (AppState.currentUser) {
+            const nameEl = document.getElementById('sheet-user-name');
+            const roleEl = document.getElementById('sheet-user-role');
+            if (nameEl) nameEl.textContent = AppState.currentUser.name || AppState.currentUser.username;
+            if (roleEl) roleEl.textContent = AppState.currentUser.role || 'User';
+            const usersBtn = document.getElementById('sheet-users-btn');
+            if (usersBtn) {
+              usersBtn.style.display = AppState.currentUser.role === 'Admin' ? 'flex' : 'none';
+            }
+          }
+          const presetSelect = document.getElementById('mobile-sheet-preset');
+          if (presetSelect) presetSelect.value = AppState.orgPreset || 'Universal';
+          sheet.classList.remove('hidden');
+        } else {
+          sheet.classList.add('hidden');
+        }
+      },
+
+      toggleMobileFab(forceState) {
+        const actions = document.getElementById('mobile-fab-actions');
+        const icon = document.getElementById('mobile-fab-icon');
+        const scrim = document.getElementById('mobile-fab-scrim');
+        if (!actions || !icon || !scrim) return;
+
+        const isCurrentlyOpen = !actions.classList.contains('pointer-events-none');
+        const shouldOpen = forceState !== undefined ? forceState : !isCurrentlyOpen;
+
+        if (shouldOpen) {
+          actions.classList.remove('opacity-0', 'scale-75', 'translate-y-4', 'pointer-events-none');
+          actions.classList.add('opacity-100', 'scale-100', 'translate-y-0');
+          icon.classList.add('rotate-45');
+          scrim.classList.remove('hidden');
+        } else {
+          actions.classList.add('opacity-0', 'scale-75', 'translate-y-4', 'pointer-events-none');
+          actions.classList.remove('opacity-100', 'scale-100', 'translate-y-0');
+          icon.classList.remove('rotate-45');
+          scrim.classList.add('hidden');
+        }
+      },
+
       async boot() {
         try {
           await DB.init();
@@ -2543,12 +2921,42 @@
           }
         });
 
+        const routeNames = {
+          '/dashboard': 'Dashboard',
+          '/members': 'Members',
+          '/plans': 'Fee Plans',
+          '/invoices': 'Invoices',
+          '/defaulters': 'Dues',
+          '/users': 'Users & RBAC',
+          '/settings': 'Settings'
+        };
+        const mobileRouteLabel = document.getElementById('mobile-route-label');
+        if (mobileRouteLabel) mobileRouteLabel.textContent = routeNames[routePath] || 'UniFee';
+
+        const isMoreRoute = ['/plans', '/users', '/settings'].includes(routePath);
+        document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+          const pill = btn.querySelector('.mobile-pill');
+          const label = btn.querySelector('.mobile-nav-text');
+          const isActive = btn.dataset.route === routePath || (btn.id === 'mobile-more-btn' && isMoreRoute);
+          if (isActive) {
+            if (pill) pill.className = 'mobile-pill w-12 h-7 rounded-full flex items-center justify-center transition-all bg-blue-600/25 text-blue-400 ring-1 ring-blue-500/40';
+            if (label) label.className = 'mobile-nav-text text-[10px] font-bold text-blue-400 mt-0.5';
+          } else {
+            if (pill) pill.className = 'mobile-pill w-12 h-7 rounded-full flex items-center justify-center transition-all text-slate-400';
+            if (label) label.className = 'mobile-nav-text text-[10px] font-medium text-slate-400 mt-0.5';
+          }
+        });
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
         await this.refreshAllViews();
       },
 
       async changeOrgPreset(presetValue) {
         AppState.orgPreset = presetValue;
         const badge = document.getElementById('org-mode-badge');
+        const mobileBadge = document.getElementById('mobile-mode-badge-label');
+        if (mobileBadge) mobileBadge.textContent = presetValue === 'Universal' ? 'Universal' : presetValue.split('/')[0];
         const navLabel = document.getElementById('nav-label-members');
         if (badge) badge.textContent = presetValue === 'Universal' ? 'All-in-One Mode' : presetValue;
         const labelMap = {
@@ -2559,6 +2967,21 @@
           'Coworking/Rental': 'Tenants / Subscribers'
         };
         if (navLabel) navLabel.textContent = labelMap[presetValue] || 'Members / Students';
+        const mobileMembersLabel = document.getElementById('mobile-nav-members-label');
+        if (mobileMembersLabel) {
+          const shortMap = {
+            'Universal': 'Members',
+            'School/College': 'Students',
+            'Academy/Coaching': 'Trainees',
+            'Gym/Club': 'Athletes',
+            'Coworking/Rental': 'Tenants'
+          };
+          mobileMembersLabel.textContent = shortMap[presetValue] || 'Members';
+        }
+        const mobileSheetPreset = document.getElementById('mobile-sheet-preset');
+        if (mobileSheetPreset) mobileSheetPreset.value = presetValue;
+        const globalOrgPreset = document.getElementById('global-org-preset');
+        if (globalOrgPreset) globalOrgPreset.value = presetValue;
         await this.refreshAllViews();
         Toast.fire({ icon: 'info', title: `Workspace filtered for: ${presetValue}` });
       },
@@ -2616,6 +3039,15 @@
         document.getElementById('kpi-overdue-count').textContent = `${overdueCount} defaulters require follow-up`;
         document.getElementById('kpi-members').textContent = String(filteredMembers.length);
         document.getElementById('kpi-plans-sub').textContent = `Across ${filteredPlans.length} fee structures`;
+
+        const mobileOverdueDot = document.getElementById('mobile-overdue-dot');
+        if (mobileOverdueDot) {
+          if (overdueCount > 0) {
+            mobileOverdueDot.classList.remove('hidden');
+          } else {
+            mobileOverdueDot.classList.add('hidden');
+          }
+        }
 
         const countMembersEl = document.getElementById('settings-count-members');
         if (countMembersEl) countMembersEl.textContent = String(members.length);
